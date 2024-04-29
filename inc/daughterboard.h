@@ -59,7 +59,7 @@
 #define VTEMP_PORT GIPOF
 #define VTEMP_PIN GPIO_PIN_6
 #define CHANNEL_VREF  ADC2_CHANNEL_15      // 2496 mV
-#define CHANNEL_VTEMP ADC2_CHANNEL_14
+#define CHANNEL_VTEMP ADC2_CHANNEL_14      // piny jsou ve výchozím stavu vstupní
 
 
 #endif
