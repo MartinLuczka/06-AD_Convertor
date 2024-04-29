@@ -5,6 +5,7 @@
 #include "milis.h"
 //#include "delay.h"
 //#include "uart1.h"
+#include "daughterboard.h"
 
 void init(void)
 {
