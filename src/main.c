@@ -35,7 +35,7 @@ int main(void)
 {
   
     uint32_t time = 0;
-    uint16_t vref, vtemp;
+    uint16_t vref, vtemp, temp;
 
     init();
 
@@ -43,9 +43,23 @@ int main(void)
         if(milis() - time > 1111) {
             time = milis();
 
-            vref = ADC_get(CHANNEL_VREF) * 5000L / 1023; // konstanta typu long int
-            vtemp = (uint32_t)ADC_get(CHANNEL_VTEMP) * 5000L / 1023; // napájecí napětí je Ucc = 5 V
-            printf("%u mV, %u mv\n", vref, vtemp);
+            vref = ADC_get(CHANNEL_VREF) * (5000L + 512) / 1023; // konstanta typu long int, 
+            // jeden z operandů chceme, aby bylo 32 bitové číslo (1023 * 5000 se do 16 bitů nevleze, poté se podělí a do 16 b výsledku se už vleze)
+            // dělení jako poslední - dělení je ztrátová operace
+            ADC_get(CHANNEL_VTEMP);
+            ADC_get(CHANNEL_VTEMP);
+            ADC_get(CHANNEL_VTEMP);
+            vtemp = (uint32_t)ADC_get(CHANNEL_VTEMP) * (5000L + 512) / 1023; // napájecí napětí je Ucc = 5 V
+            // + polovina jmenovatele (zajištění správného zaokrouhlování), v našem případě + 512
+            temp = (vtemp - 400) / 19.5;
+            // měnší přesnost
+            vtemp = ((vtemp * 2495L) + (vref/2)) / vref;
+            // korekci chyby pomocí katologové ref. hodnota - počítáme se stejnou chybou
+            temp = (100L*vtemp - 40000L + (195/2)) / 195;
+            // větší přesnost
+            printf("%u mV, %u mV %u,%u ˚C\n", vref, vtemp, temp/10, temp%10);
+            // celočíselnou část a desetinnou část rozdělíme
+
         }
 
     }
