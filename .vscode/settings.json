@@ -5,5 +5,13 @@
     },
     "clangd.arguments": [
         "--header-insertion=never"
-    ]
+    ],
+    "files.associations": {
+        "daughterboard.h": "c",
+        "uart1.h": "c",
+        "milis.h": "c",
+        "main.h": "c",
+        "stdio.h": "c",
+        "stdbool.h": "c"
+    }
 }
