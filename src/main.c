@@ -12,8 +12,6 @@ void init(void)
 {
     CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1);      // taktovani MCU na 16MHz
 
-
-
     init_milis();
     init_uart1();
 
@@ -32,7 +30,6 @@ void init(void)
     ADC2_Startup_Wait();
 
 }
-
 
 int main(void)
 {
